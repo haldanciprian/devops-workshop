@@ -3,12 +3,13 @@ provider "aws" {
 }
 
 resource "aws_instance" "demo-server" {
-  ami = "ami-0f7204385566b32d0"
+  ami = "ami-023adaba598e661ac"
   instance_type = "t2.micro"
   key_name = "dpp"
   //security_groups = ["demo-sg"]
   vpc_security_group_ids = [aws_security_group.demo-sg.id]
   subnet_id = aws_subnet.dpp-public-subnet-01.id
+  
 }
 
 resource "aws_security_group" "demo-sg" {
