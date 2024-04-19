@@ -27,7 +27,7 @@ resource "aws_instance" "demo-server" {
       "sudo apt install ansible -y",
       "sudo yum install git -y",
       "git clone https://github.com/haldanciprian/devops-workshop.git /tmp/devops",
-      "ansible-playbook -i /Ansible/hosts /tmp/devops/Ansible/jenkins-master-setup.yaml"
+      
     ]
   }
 }
