@@ -9,9 +9,26 @@ resource "aws_instance" "demo-server" {
   //security_groups = ["demo-sg"]
   vpc_security_group_ids = [aws_security_group.demo-sg.id]
   subnet_id              = aws_subnet.dpp-public-subnet-01.id
-  for_each               = toset(["Jenkins-master", "build-slave", "ansible"])
+  for_each               = toset(["ansible"])
   tags = {
     Name = "${each.key}"
+  }
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = "${file("dpp.pem")}"
+    host        = "${self.public_ip}"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install software-properties-common",
+      "sudo add-apt-repository --yes --update ppa:ansible/ansible",
+      "sudo apt install ansible -y",
+      "sudo yum install git -y",
+      "git clone https://github.com/haldanciprian/devops-workshop.git /tmp/devops",
+      "ansible-playbook -i /Ansible/hosts /tmp/devops/Ansible/jenkins-master-setup.yaml"
+    ]
   }
 }
 
