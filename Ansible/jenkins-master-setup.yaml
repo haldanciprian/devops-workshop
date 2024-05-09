@@ -2,10 +2,10 @@
 - hosts: jenkins-master
   become: true
   tasks:
-  - name:  add jenkins key
+  - name: add jenkins key
     apt_key:
-    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-    state: present
+      url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+      state: present
 
   - name: add jenkins repo
     apt_repository:
